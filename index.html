@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMPULSOS · Siguiendo las señales de Dios</title>
+<!-- Swiper.js (CDN) — únicamente usado por el carrusel "Momentos Históricos" -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+  :root{
+    --header-bg:#1c1b22;
+    --header-text:#f4ead9;
+    --accent:#c1592f;
+    --accent-dark:#9c4423;
+    --bg-outer-1:#f3d9ab;
+    --bg-outer-2:#e08a4a;
+    --stage-bg:#fbf6ec;
+    --panel-bg:#f7f1e2;
+    --panel-border:#e6d9bd;
+    --text-main:#3c2c22;
+    --text-soft:#7a6553;
+    --page-shadow: 0 18px 40px rgba(60,30,10,.35);
+  }
+  html[data-theme="dark"]{
+    --header-bg:#0d0c10;
+    --header-text:#f4ead9;
+    --accent:#e08a4a;
+    --accent-dark:#c1592f;
+    --bg-outer-1:#2a2118;
+    --bg-outer-2:#120f0c;
+    --stage-bg:#1b1712;
+    --panel-bg:#241e17;
+    --panel-border:#3a2f22;
+    --text-main:#f1e6d8;
+    --text-soft:#c3ab90;
+    --page-shadow: 0 18px 40px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:'Georgia', 'Iowan Old Style', serif;
+    background:radial-gradient(circle at 30% 20%, var(--bg-outer-1), var(--bg-outer-2));
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;
+    padding:14px;
+    transition:background .4s ease;
+  }
+  .stage{
+    width:min(97vw, calc(1500px + 6cm));
+    max-height:97vh;
+    background:var(--stage-bg);
+    border-radius:18px;
+    box-shadow:0 30px 70px rgba(20,10,0,.45), 0 0 0 1px rgba(255,255,255,.15) inset;
+    overflow-y:auto;
+    overflow-x:hidden;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    transition:background .4s ease;
+  }
+
+  /* ---------- HEADER ---------- */
+  header.topbar{
+    height:clamp(44px,6vh,64px);
+    min-height:44px;
+    background:var(--header-bg);
+    color:var(--header-text);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 clamp(14px,2vw,28px);
+    flex-shrink:0;
+  }
+  .logo{
+    font-size:clamp(15px,1.5vw,22px);
+    letter-spacing:.32em;
+    font-weight:600;
+    color:var(--header-text);
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo svg{flex-shrink:0}
+
+  /* =====================================================================
+     PLACA "PRÓXIMAMENTE WWW.IMPULSOS.ORG"
+     Reemplaza el wordmark "IMPULSOS" en la barra de menú por un anuncio
+     con tipografía formal (serif itálica) que invite a la reflexión.
+     Se coloca sobre una placa clara para que el texto en negro sea
+     legible sobre el header oscuro; "SOS" se resalta en blanco y
+     negrita dentro de una pequeña ficha oscura, como llamado de atención.
+     ===================================================================== */
+  .brand-plaque{
+    display:flex;
+    align-items:center;
+    background:#f4ead9;
+    border-radius:8px;
+    padding:6px 16px;
+    box-shadow:0 2px 8px rgba(0,0,0,.28);
+  }
+  .brand-text{
+    font-family:'Times New Roman','Iowan Old Style',Georgia,serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(10px,1.05vw,14px);
+    letter-spacing:.03em;
+    color:#000;
+    white-space:nowrap;
+  }
+  .brand-sos{
+    display:inline-block;
+    font-style:normal;
+    font-weight:800;
+    color:#fff;
+    background:var(--header-bg);
+    padding:1px 6px;
+    margin:0 1px;
+    border-radius:4px;
+    letter-spacing:.05em;
+  }
+  @media (max-width:640px){
+    .brand-text{font-size:9.5px;}
+  }
+  .header-controls{display:flex;align-items:center;gap:10px;}
+  .icon-btn{
+    display:flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    color:var(--header-text);
+    border-radius:999px;
+    padding:7px 14px;
+    font-family:inherit;
+    font-size:clamp(11px,.95vw,13px);
+    cursor:pointer;
+    transition:background .2s;
+    white-space:nowrap;
+  }
+  .icon-btn:hover{background:rgba(255,255,255,.18);}
+  .btn-contact{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .btn-contact:hover{background:var(--accent-dark);}
+  .btn-read{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .btn-read:hover{background:var(--accent-dark);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    width:100%;
+    aspect-ratio:1672/941;
+    flex-shrink:0;
+    overflow:hidden;
+    background-color:#5a3417;
+    background-image:url('assets/hero_full.jpg');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+  }
+
+  /* ---------- MAIN ---------- */
+  main.content{
+    height:calc(44vh + 8cm);
+    min-height:calc(340px + 8cm);
+    flex-shrink:0;
+    display:flex;
+    background:var(--stage-bg);
+  }
+
+  /* left author column */
+  .col-author{
+    width:15%;
+    border-right:1px solid var(--panel-border);
+    padding:clamp(10px,1.6vw,20px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:10px;
+    overflow:auto;
+  }
+  .author-cover{
+    width:82%;
+    aspect-ratio:1632/2600;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:var(--page-shadow);
+    border:3px solid var(--panel-bg);
+    outline:1px solid var(--panel-border);
+  }
+  .author-cover img{width:100%;height:100%;object-fit:cover;display:block;}
+  .author-label{
+    font-size:clamp(9px,.85vw,11px);
+    color:var(--text-soft);
+    letter-spacing:.03em;
+  }
+  .author-name{
+    font-size:clamp(12px,1.15vw,16px);
+    font-weight:700;
+    letter-spacing:.06em;
+    color:var(--text-main);
+  }
+  .author-sub{
+    font-size:clamp(9px,.8vw,11px);
+    color:var(--text-soft);
+    line-height:1.5;
+  }
+
+  /* =====================================================================
+     AUDIOLIBRO — Reproductor mejorado (tarjetas + reproductor completo)
+     Reemplaza el antiguo bloque .listen-box. Vive en la barra lateral
+     izquierda (.col-author), dentro de la misma columna existente:
+     no se toca el resto del layout del sitio.
+     ===================================================================== */
+  .audiobook{
+    margin-top:auto;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    background:var(--panel-bg);
+    border:1px solid var(--panel-border);
+    border-radius:16px;
+    padding:12px;
+    font-family:Arial,Helvetica,sans-serif;
+  }
+  .audiobook-header{
+    display:flex;align-items:center;gap:8px;
+    font-weight:700;
+    font-size:clamp(11px,1vw,13px);
+    color:var(--text-main);
+    letter-spacing:.03em;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--panel-border);
+  }
+  .audiobook-icon{font-size:15px;line-height:1;}
+
+  /* Lista de capítulos (tarjetas), generada dinámicamente por JS */
+  .audiobook-list{
+    list-style:none;
+    margin:0;padding:0;
+    display:flex;flex-direction:column;
+    gap:6px;
+    max-height:210px;
+    overflow-y:auto;
+  }
+  .ab-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:8px 10px;
+    border-radius:10px;
+    background:var(--stage-bg);
+    border:1px solid transparent;
+    cursor:pointer;
+    position:relative;
+    transition:background .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .ab-item:hover{
+    background:var(--panel-border);
+    transform:translateX(2px);
+  }
+  .ab-item.active{
+    background:rgba(193,89,47,.14);
+    border-color:var(--accent);
+  }
+  /* Pequeña barra lateral que marca el capítulo activo */
+  .ab-item.active::before{
+    content:'';
+    position:absolute;
+    left:0; top:10%;
+    width:4px; height:80%;
+    border-radius:4px;
+    background:var(--accent);
+  }
+  .ab-item-main{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .ab-item-title{
+    font-size:clamp(10.5px,.95vw,12px);
+    color:var(--text-main);
+    font-weight:700;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .ab-item.active .ab-item-title{color:var(--accent-dark);}
+  .ab-item-duration{
+    font-size:9.5px;
+    color:var(--text-soft);
+  }
+  .ab-item-playing-icon{
+    font-size:13px;
+    color:var(--accent);
+    flex-shrink:0;
+    opacity:0;
+    transform:scale(.6);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .ab-item.active .ab-item-playing-icon{opacity:1;transform:scale(1);}
+
+  /* Reproductor (título actual + controles) */
+  .audiobook-player{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding-top:8px;
+    border-top:1px solid var(--panel-border);
+  }
+  .ab-now-playing{text-align:center;}
+  @keyframes abFadeIn{
+    from{opacity:0; transform:translateY(3px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .ab-now-playing.ab-anim{animation:abFadeIn .35s ease;}
+  .ab-track-title{
+    font-family:Georgia,'Iowan Old Style',serif;
+    font-size:clamp(11.5px,1.05vw,13.5px);
+    font-weight:700;
+    color:var(--text-main);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .ab-track-sub{
+    font-size:9.5px;
+    color:var(--text-soft);
+    margin-top:1px;
+  }
+
+  .ab-progress-row{
+    display:flex;align-items:center;gap:6px;
+  }
+  .ab-time{font-size:9px;color:var(--text-soft);min-width:30px;text-align:center;}
+  .ab-seek{flex:1;accent-color:var(--accent);height:4px;cursor:pointer;}
+
+  .ab-main-controls{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+  }
+  .ab-btn{
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:var(--text-main);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .15s ease, background .2s ease, color .2s ease;
+  }
+  .ab-btn-icon{
+    font-size:15px;
+    width:30px;height:30px;
+    border-radius:50%;
+  }
+  .ab-btn-icon:hover{background:var(--panel-border);transform:scale(1.08);}
+  .ab-btn-play{
+    width:42px;height:42px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-size:16px;
+  }
+  .ab-btn-play:hover{background:var(--accent-dark);transform:scale(1.06);}
+
+  .ab-secondary-controls{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:6px;flex-wrap:wrap;
+  }
+  .ab-chip{
+    width:28px;height:28px;
+    border-radius:50%;
+    font-size:13px;
+    background:var(--stage-bg);
+    border:1px solid var(--panel-border);
+    color:var(--text-soft);
+    text-decoration:none;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .ab-chip:hover{background:var(--panel-border);color:var(--text-main);}
+  .ab-chip.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+
+  .ab-volume{display:flex;align-items:center;gap:4px;flex:1;min-width:64px;}
+  .ab-vol-icon{font-size:12px;color:var(--text-soft);cursor:pointer;}
+  .ab-vol-slider{flex:1;accent-color:var(--accent);height:4px;cursor:pointer;}
+
+  .ab-speed{
+    font-family:inherit;
+    font-size:10.5px;
+    border:1px solid var(--panel-border);
+    border-radius:8px;
+    background:var(--stage-bg);
+    color:var(--text-main);
+    padding:3px 4px;
+    cursor:pointer;
+  }
+
+  /* center reader */
+  .col-reader{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(8px,1.4vh,16px);
+    min-width:0;
+    position:relative;
+    gap:6px;
+  }
+  .zoom-row{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    font-family:Arial,Helvetica,sans-serif;
+    flex-shrink:0;
+  }
+  .zoom-controls{
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel-bg);
+    border:1px solid var(--panel-border);
+    border-radius:999px;
+    padding:4px 6px;
+  }
+  .zoom-btn{
+    width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--panel-border);
+    background:var(--stage-bg);
+    color:var(--text-main);
+    font-family:Georgia,serif;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;
+    transition:background .15s;
+  }
+  .zoom-btn:first-child{font-size:10px;}
+  .zoom-btn:hover{background:var(--accent);color:#fff;}
+  .zoom-level{
+    font-size:10.5px;color:var(--text-soft);min-width:34px;text-align:center;
+  }
+  .zoom-label{
+    font-size:10px;color:var(--text-soft);
+  }
+
+  .book-wrap{
+    flex:1;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:0;
+    gap:clamp(6px,1.4vw,18px);
+    perspective:2400px;
+  }
+  .nav-btn{
+    width:clamp(28px,3vw,40px);
+    height:clamp(28px,3vw,40px);
+    border-radius:50%;
+    border:1px solid var(--panel-border);
+    background:var(--panel-bg);
+    color:var(--text-main);
+    cursor:pointer;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    transition:transform .15s, background .2s;
+  }
+  .nav-btn:hover{background:var(--accent);color:#fff;transform:scale(1.08);}
+  .nav-btn:disabled{opacity:.3;cursor:default;transform:none;background:var(--panel-bg);color:var(--text-main);}
+
+  .book-spread{
+    position:relative;
+    height:100%;
+    max-height:100%;
+    display:flex;
+    align-items:stretch;
+    justify-content:center;
+    gap:0;
+    transform:scale(var(--zoom,1));
+    transform-origin:center center;
+    transition:transform .2s ease;
+  }
+  .page-slot{
+    position:relative;
+    height:100%;
+    aspect-ratio:0.625;
+    box-shadow:var(--page-shadow);
+    background:#fff;
+  }
+  .page-slot[data-side="left"]{border-radius:3px 0 0 3px;}
+  .page-slot[data-side="right"]{border-radius:0 3px 3px 0;}
+  .spine{
+    width:10px;
+    height:100%;
+    flex-shrink:0;
+    background:linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,.05) 40%, rgba(0,0,0,.05) 60%, rgba(0,0,0,.28));
+    z-index:6;
+  }
+  .page-slot .base-page{
+    position:absolute;inset:0;
+    overflow:hidden;
+    background:#fff;
+  }
+  .page-slot .base-page img{width:100%;height:100%;object-fit:cover;display:block;}
+  .page-slot .flip-page{
+    position:absolute;inset:0;
+    overflow:hidden;
+    transform-origin:left center;
+    transform-style:preserve-3d;
+    transition:transform .75s cubic-bezier(.4,.1,.2,1);
+    z-index:5;
+  }
+  .page-slot[data-side="right"] .flip-page{transform-origin:left center;}
+  .page-slot[data-side="left"] .flip-page{transform-origin:right center;}
+  .page-slot .flip-page .face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;
+    background:#fff;
+  }
+  .page-slot .flip-page .face img{width:100%;height:100%;object-fit:cover;display:block;}
+  .page-slot .flip-page .face.back{transform:rotateY(180deg);}
+  .page-slot[data-side="right"] .flip-page.turning{transform:rotateY(-180deg);}
+  .page-slot[data-side="left"] .flip-page.turning{transform:rotateY(180deg);}
+  .page-slot .flip-page::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,.18), transparent 12%, transparent 88%, rgba(0,0,0,.12));
+    pointer-events:none;
+  }
+  .page-click-zone{
+    position:absolute;top:0;bottom:0;width:15%;cursor:pointer;z-index:8;
+  }
+  .page-click-zone.left{left:0;}
+  .page-click-zone.right{right:0;}
+
+  .page-indicator{
+    margin-top:2px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:clamp(10px,.9vw,12px);
+    color:var(--text-soft);
+    display:flex;align-items:center;gap:10px;
+    flex-shrink:0;
+  }
+  .page-indicator input{
+    width:46px;font-family:inherit;font-size:inherit;
+    text-align:center;border:1px solid var(--panel-border);
+    border-radius:6px;padding:2px 4px;background:var(--panel-bg);color:var(--text-main);
+  }
+
+  /* right sidebar */
+  .col-side{
+    width:16%;
+    border-left:1px solid var(--panel-border);
+    padding:clamp(10px,1.6vw,20px);
+    display:flex;flex-direction:column;gap:14px;
+    overflow:auto;
+  }
+  .side-title{
+    display:flex;align-items:center;gap:8px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-weight:700;letter-spacing:.04em;
+    font-size:clamp(11px,1vw,13px);
+    color:var(--text-main);
+  }
+  .bookmark-card{
+    background:var(--panel-bg);
+    border:1px solid var(--panel-border);
+    border-radius:10px;
+    padding:10px 12px;
+    font-family:Arial,Helvetica,sans-serif;
+  }
+  .bookmark-card .cap{
+    font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-soft);
+  }
+  .bookmark-card .val{
+    font-size:clamp(12px,1.05vw,15px);color:var(--text-main);font-weight:700;margin-top:2px;
+  }
+  .progress-label{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:10px;color:var(--text-soft);
+    display:flex;justify-content:space-between;
+  }
+  .progress-track{
+    width:100%;height:7px;border-radius:999px;
+    background:var(--panel-border);overflow:hidden;margin:6px 0 4px;
+  }
+  .progress-fill{
+    height:100%;background:var(--accent);width:0%;
+    transition:width .3s ease;
+  }
+  .progress-text{font-family:Arial,Helvetica,sans-serif;font-size:9.5px;color:var(--text-soft);}
+  .goto-form{display:flex;gap:6px;margin-top:2px;}
+  .goto-form input{
+    width:100%;font-family:Arial,Helvetica,sans-serif;font-size:11px;
+    border:1px solid var(--panel-border);border-radius:6px;padding:5px 8px;
+    background:var(--panel-bg);color:var(--text-main);
+  }
+  .goto-form button{
+    font-family:Arial,Helvetica,sans-serif;font-size:11px;
+    border:none;border-radius:6px;background:var(--accent);color:#fff;
+    padding:5px 10px;cursor:pointer;white-space:nowrap;
+  }
+  .side-note{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:10px;line-height:1.6;color:var(--text-soft);
+    margin-top:auto;
+    border-top:1px solid var(--panel-border);
+    padding-top:10px;
+  }
+
+  /* ---------- CONTACT MODAL ---------- */
+  .modal-overlay{
+    position:absolute;inset:0;
+    background:rgba(15,10,5,.55);
+    display:none;
+    align-items:center;justify-content:center;
+    z-index:50;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .bubble{
+    background:var(--stage-bg);
+    color:var(--text-main);
+    width:min(420px,92%);
+    border-radius:18px;
+    padding:22px 24px 20px;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+    position:relative;
+    font-family:Arial,Helvetica,sans-serif;
+    transform:scale(.92);
+    opacity:0;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .modal-overlay.open .bubble{transform:scale(1);opacity:1;}
+  .bubble::after{
+    content:'';position:absolute;top:-9px;right:38px;
+    width:18px;height:18px;background:var(--stage-bg);
+    transform:rotate(45deg);border-radius:3px;
+  }
+  .bubble h2{
+    margin:0 0 4px;font-family:Georgia,serif;font-size:19px;color:var(--text-main);
+  }
+  .bubble .sub{font-size:11.5px;color:var(--text-soft);margin-bottom:14px;}
+  .bubble .close-x{
+    position:absolute;top:12px;right:14px;background:none;border:none;
+    font-size:18px;color:var(--text-soft);cursor:pointer;line-height:1;
+  }
+  .field{margin-bottom:10px;display:flex;flex-direction:column;gap:4px;}
+  .field label{font-size:10.5px;color:var(--text-soft);font-weight:700;letter-spacing:.02em;}
+  .field input,.field textarea{
+    font-family:inherit;font-size:12.5px;
+    border:1px solid var(--panel-border);border-radius:8px;
+    padding:8px 10px;background:var(--panel-bg);color:var(--text-main);
+    resize:none;
+  }
+  .field textarea{min-height:58px;}
+  .submit-btn{
+    width:100%;padding:10px;border:none;border-radius:9px;
+    background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+    cursor:pointer;margin-top:4px;
+  }
+  .submit-btn:hover{background:var(--accent-dark);}
+  .form-msg{font-size:11.5px;margin-top:8px;text-align:center;min-height:14px;}
+  .form-msg.ok{color:#2e7d32;}
+  .form-msg.err{color:#b3261e;}
+  .hp{display:none;}
+
+  ::selection{background:var(--accent);color:#fff;}
+  @media (max-width:760px){
+    .col-author,.col-side{display:none;}
+  }
+
+  /* =====================================================================
+     MOMENTOS HISTÓRICOS — Carrusel de videos (Swiper.js, efecto Coverflow)
+     Bloque 100% nuevo y aislado: no reutiliza ni modifica ninguna regla
+     existente arriba, solo se agrega debajo de la sección de lectura.
+     ===================================================================== */
+  .historic-moments{
+    flex-shrink:0;
+    padding:clamp(22px,3.4vh,40px) clamp(10px,2.4vw,32px) clamp(30px,4.2vh,48px);
+    background:var(--stage-bg);
+    border-top:1px solid var(--panel-border);
+    overflow:hidden;
+  }
+  .historic-moments .hm-title{
+    text-align:center;
+    font-family:Georgia,'Iowan Old Style',serif;
+    font-weight:700;
+    font-size:clamp(18px,2.1vw,27px);
+    letter-spacing:.05em;
+    color:var(--text-main);
+    margin:0 0 clamp(16px,2.6vh,28px);
+  }
+
+  /* Contenedor Swiper: fondo transparente, altura fija para que las
+     diapositivas (video 16:9) y la paginación tengan espacio consistente. */
+  .historic-swiper{
+    width:100%;
+    background:transparent;
+    padding:10px 4px 46px; /* deja hueco abajo para los bullets de paginación */
+  }
+  .historic-swiper .swiper-slide{
+    width:clamp(190px,26vw,340px);
+    aspect-ratio:16/9;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  /* Marco interno de cada video: aquí se aplica el agrandado del video
+     CENTRAL, sin interferir con el transform 3D que Swiper controla
+     directamente sobre .swiper-slide para el efecto Coverflow. */
+  .historic-swiper .hm-video-frame{
+    width:100%;
+    height:100%;
+    border-radius:20px;
+    overflow:hidden;
+    background:transparent;
+    box-shadow:0 16px 36px rgba(20,10,0,.32);
+    transition:transform .4s ease, box-shadow .4s ease, filter .4s ease;
+  }
+  /* Swiper marca automáticamente la diapositiva centrada con esta clase:
+     solo esa diapositiva se agranda (video central más grande) y recibe
+     una sombra más pronunciada para reforzar la sensación de profundidad 3D. */
+  .historic-swiper .swiper-slide-active .hm-video-frame{
+    transform:scale(1.28);
+    box-shadow:0 32px 68px rgba(20,10,0,.6);
+  }
+  /* Diapositivas laterales ligeramente atenuadas para acentuar el
+     contraste "video central destacado vs. laterales inclinados". */
+  .historic-swiper .swiper-slide:not(.swiper-slide-active) .hm-video-frame{
+    filter:brightness(.82);
+  }
+  .historic-swiper video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    background:#000;
+    pointer-events:none; /* por defecto los videos laterales no son interactivos */
+  }
+  /* Solo el video central (activo) admite clics: reproducir, pausar,
+     pantalla completa y control de volumen mediante sus controles nativos. */
+  .historic-swiper .swiper-slide-active video{
+    pointer-events:auto;
+  }
+
+  /* Flechas de navegación */
+  .historic-swiper .swiper-button-next,
+  .historic-swiper .swiper-button-prev{
+    width:clamp(34px,3.6vw,46px);
+    height:clamp(34px,3.6vw,46px);
+    background:rgba(28,27,34,.55);
+    border-radius:50%;
+    color:#f4ead9;
+    --swiper-navigation-size:16px;
+    transition:background .2s, transform .2s;
+  }
+  .historic-swiper .swiper-button-next:hover,
+  .historic-swiper .swiper-button-prev:hover{
+    background:var(--accent);
+    transform:scale(1.06);
+  }
+  .historic-swiper .swiper-button-next:after,
+  .historic-swiper .swiper-button-prev:after{
+    font-size:15px;
+    font-weight:700;
+  }
+
+  /* Paginación inferior */
+  .historic-swiper .swiper-pagination-bullet{
+    background:var(--text-soft);
+    opacity:.45;
+    width:8px;height:8px;
+  }
+  .historic-swiper .swiper-pagination-bullet-active{
+    background:var(--accent);
+    opacity:1;
+  }
+
+  @media (max-width:760px){
+    .historic-swiper .swiper-button-next,
+    .historic-swiper .swiper-button-prev{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <header class="topbar">
+    <div class="logo brand-plaque">
+      <span class="brand-text">Próximamente WWW.IMPUL<span class="brand-sos">SOS</span>.ORG</span>
+    </div>
+    <div class="header-controls">
+      <button class="icon-btn btn-read" id="headerReadBtn" type="button">📖 Leer Ahora</button>
+      <button class="icon-btn" id="themeToggle" type="button">
+        <span id="themeIcon">☾</span> <span id="themeLabel">Noche</span>
+      </button>
+      <button class="icon-btn btn-contact" id="openContact" type="button">Contacto a ImpulSOS</button>
+    </div>
+  </header>
+
+  <section class="hero" role="img" aria-label="IMPULSOS - Siguiendo las señales de Dios para dejar un legado duradero - Una autobiografía devocional por Lorenzo Anderson"></section>
+
+  <main class="content">
+
+    <aside class="col-author">
+      <div class="author-cover"><img src="assets/portada_completa.jpg" alt="Portada del libro IMPULSOS con Lorenzo Anderson y su esposa"></div>
+      <div class="author-label">Una Autobiografía Devocional por</div>
+      <div class="author-name">LORENZO ANDERSON</div>
+      <div class="author-sub">Un testimonio de fe, familia y los impulsos de Dios a lo largo de una vida.</div>
+
+      <!--
+        AUDIOLIBRO (mejorado) — la lista de capítulos de abajo se genera
+        dinámicamente vía JavaScript (ver assets/audiobook.js) a partir
+        del arreglo "audios"; aquí solo se deja la estructura y los
+        controles del reproductor.
+      -->
+      <div class="audiobook" id="audiobook">
+        <div class="audiobook-header">
+          <span class="audiobook-icon">📚</span>
+          <span>AUDIO LIBRO</span>
+        </div>
+
+        <!-- Menú de capítulos: se llena por JS -->
+        <ul class="audiobook-list" id="audiobookList"></ul>
+
+        <div class="audiobook-player">
+          <div class="ab-now-playing" id="abNowPlaying">
+            <div class="ab-track-title" id="abTrackTitle">Selecciona un capítulo</div>
+            <div class="ab-track-sub" id="abTrackSub">Toca un capítulo de la lista para comenzar</div>
+          </div>
+
+          <div class="ab-progress-row">
+            <span class="ab-time" id="abCurrentTime">00:00</span>
+            <input type="range" id="abSeek" class="ab-seek" value="0" min="0" max="100" step="0.1" aria-label="Progreso del audio">
+            <span class="ab-time" id="abDuration">00:00</span>
+          </div>
+
+          <div class="ab-main-controls">
+            <button class="ab-btn ab-btn-icon" id="abPrev" type="button" aria-label="Capítulo anterior">⏮</button>
+            <button class="ab-btn ab-btn-play" id="abPlayPause" type="button" aria-label="Reproducir">▶</button>
+            <button class="ab-btn ab-btn-icon" id="abNext" type="button" aria-label="Siguiente capítulo">⏭</button>
+          </div>
+
+          <div class="ab-secondary-controls">
+            <button class="ab-chip" id="abRepeat" type="button" aria-label="Repetir capítulo" title="Repetir">🔁</button>
+
+            <div class="ab-volume">
+              <span class="ab-vol-icon" id="abVolIcon" title="Silenciar / activar sonido">🔊</span>
+              <input type="range" id="abVolume" class="ab-vol-slider" min="0" max="100" value="100" aria-label="Volumen">
+            </div>
+
+            <select class="ab-speed" id="abSpeed" aria-label="Velocidad de reproducción" title="Velocidad">
+              <option value="0.75">0.75x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+            </select>
+
+            <a class="ab-chip" id="abDownload" href="#" download aria-label="Descargar audio" title="Descargar">⬇</a>
+          </div>
+
+          <!-- Elemento <audio> real, compartido por todos los capítulos:
+               al cargar una nueva fuente se detiene automáticamente
+               cualquier reproducción anterior. -->
+          <audio id="abAudio" preload="none"></audio>
+        </div>
+      </div>
+    </aside>
+
+    <section class="col-reader">
+      <div class="book-wrap">
+        <button class="nav-btn" id="prevBtn" aria-label="Páginas anteriores">‹</button>
+
+        <div class="book-spread" id="bookSpread">
+          <div class="page-slot" data-side="left">
+            <div class="base-page" id="baseUnderL"><img id="imgUnderL" alt=""></div>
+            <div class="flip-page" id="flipPageL">
+              <div class="face front"><img id="imgFrontL" alt=""></div>
+              <div class="face back"><img id="imgBackL" alt=""></div>
+            </div>
+          </div>
+          <div class="spine"></div>
+          <div class="page-slot" data-side="right">
+            <div class="base-page" id="baseUnderR"><img id="imgUnderR" alt=""></div>
+            <div class="flip-page" id="flipPageR">
+              <div class="face front"><img id="imgFrontR" alt=""></div>
+              <div class="face back"><img id="imgBackR" alt=""></div>
+            </div>
+          </div>
+          <div class="page-click-zone left" id="zoneLeft"></div>
+          <div class="page-click-zone right" id="zoneRight"></div>
+        </div>
+
+        <button class="nav-btn" id="nextBtn" aria-label="Páginas siguientes">›</button>
+      </div>
+
+      <div class="page-indicator">
+        <span>Páginas</span>
+        <input type="number" id="pageInput" min="1" value="1">
+        <span id="totalPagesLbl">– 2 de 154</span>
+      </div>
+    </section>
+
+    <aside class="col-side">
+      <div class="side-title">🔖 Marcadores</div>
+
+      <div class="zoom-row">
+        <span class="zoom-label">Tamaño de letra</span>
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomOut" type="button" aria-label="Reducir tamaño">A−</button>
+          <span class="zoom-level" id="zoomLevel">100%</span>
+          <button class="zoom-btn" id="zoomIn" type="button" aria-label="Aumentar tamaño">A+</button>
+        </div>
+      </div>
+
+      <div class="bookmark-card">
+        <div class="cap">Leyendo ahora</div>
+        <div class="val" id="bmPage">Páginas 1–2</div>
+      </div>
+
+      <div>
+        <div class="side-title" style="margin-bottom:2px;">Progreso de lectura</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">2 de 154 páginas</div>
+      </div>
+
+      <div>
+        <div class="side-title" style="margin-bottom:6px;">Ir a página</div>
+        <form class="goto-form" id="gotoForm">
+          <input type="number" min="1" max="154" placeholder="N.º de página" id="gotoInput">
+          <button type="submit">Ir</button>
+        </form>
+      </div>
+
+      <div class="side-note">IMPULSOS · Siguiendo las señales de Dios para dejar un legado duradero.<br>Una autobiografía devocional de Lorenzo Anderson.</div>
+    </aside>
+
+  </main>
+
+  <!--
+    ======================================================================
+    MOMENTOS HISTÓRICOS — Carrusel de videos con efecto Coverflow (Swiper.js)
+    Sección nueva, independiente del resto del sitio. Las diapositivas
+    (.swiper-slide) se generan dinámicamente desde assets/historic-carousel.js
+    a partir del arreglo "videos"; aquí solo se deja el contenedor vacío.
+    ======================================================================
+  -->
+  <section class="historic-moments">
+    <h2 class="hm-title">Momentos Históricos</h2>
+
+    <div class="swiper historic-swiper" id="historicSwiper">
+      <!-- Las diapositivas (una por video) se insertan aquí vía JavaScript -->
+      <div class="swiper-wrapper" id="historicSwiperWrapper"></div>
+
+      <!-- Paginación inferior -->
+      <div class="swiper-pagination"></div>
+
+      <!-- Flechas de navegación -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="bubble">
+      <button class="close-x" id="closeContact" type="button">×</button>
+      <h2>Contacta a ImpulSOS</h2>
+      <div class="sub">Escríbenos y te responderemos pronto.</div>
+      <!--
+        Formulario de contacto — enviado mediante EmailJS (ver assets/email.js).
+        Todos los campos ya cuentan con id único para ser referenciados desde JS:
+        contactForm, cName, cEmail, cWhats (opcional), cMsg, submitBtn, formMsg.
+      -->
+      <form id="contactForm" novalidate>
+        <!-- Campo "honeypot" anti-spam: invisible para personas, los bots suelen rellenarlo -->
+        <input type="text" class="hp" id="cHoneypot" name="honeypot" tabindex="-1" autocomplete="off">
+        <div class="field">
+          <label for="cName">Nombre</label>
+          <input type="text" id="cName" name="Nombre" required>
+        </div>
+        <div class="field">
+          <label for="cEmail">Correo electrónico</label>
+          <input type="email" id="cEmail" name="Email" required>
+        </div>
+        <div class="field">
+          <label for="cWhats">Número de WhatsApp (opcional)</label>
+          <input type="tel" id="cWhats" name="WhatsApp" placeholder="+502 5555 5555">
+        </div>
+        <div class="field">
+          <label for="cMsg">Comentario</label>
+          <textarea id="cMsg" name="Comentario" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Enviar</button>
+        <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  var themeIcon = document.getElementById('themeIcon');
+  var themeLabel = document.getElementById('themeLabel');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    if(t === 'dark'){ themeIcon.textContent='☀'; themeLabel.textContent='Día'; }
+    else { themeIcon.textContent='☾'; themeLabel.textContent='Noche'; }
+  }
+  applyTheme('light');
+  themeToggle.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- LEER AHORA (ir a la sección de lectura) ---------- */
+  function scrollToReader(){
+    var target = document.querySelector('.col-reader');
+    if(target && target.scrollIntoView){
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  }
+  document.getElementById('headerReadBtn').addEventListener('click', scrollToReader);
+
+  /* ---------- MODAL DE CONTACTO (abrir / cerrar) ----------
+     El envío del formulario (validación + EmailJS) vive por separado
+     en assets/email.js para mantener el JavaScript organizado por
+     responsabilidad: este bloque solo controla la burbuja modal. */
+  var overlay = document.getElementById('modalOverlay');
+  document.getElementById('openContact').addEventListener('click', function(){
+    overlay.classList.add('open');
+  });
+  document.getElementById('closeContact').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+  function closeModal(){ overlay.classList.remove('open'); }
+  // Se expone para que assets/email.js pueda cerrar la burbuja tras un envío exitoso
+  window.IMPULSOS_closeContactModal = closeModal;
+
+  /* NOTA: el reproductor de audio "Lectura en voz alta" original fue
+     reemplazado por el nuevo AUDIOLIBRO (tarjetas + reproductor completo).
+     Su lógica vive ahora, de forma independiente, en assets/audiobook.js. */
+
+  /* ---------- ZOOM (tamaño de letra / lectura) ---------- */
+  var bookSpread = document.getElementById('bookSpread');
+  var zoomLevelLbl = document.getElementById('zoomLevel');
+  var zoomIn = document.getElementById('zoomIn');
+  var zoomOut = document.getElementById('zoomOut');
+  var zoom = 1;
+  var ZOOM_MIN = 0.7, ZOOM_MAX = 1.7, ZOOM_STEP = 0.1;
+  function applyZoom(){
+    bookSpread.style.setProperty('--zoom', zoom.toFixed(2));
+    zoomLevelLbl.textContent = Math.round(zoom*100) + '%';
+    zoomIn.disabled = zoom >= ZOOM_MAX - 0.001;
+    zoomOut.disabled = zoom <= ZOOM_MIN + 0.001;
+  }
+  zoomIn.addEventListener('click', function(){
+    zoom = Math.min(ZOOM_MAX, +(zoom + ZOOM_STEP).toFixed(2));
+    applyZoom();
+  });
+  zoomOut.addEventListener('click', function(){
+    zoom = Math.max(ZOOM_MIN, +(zoom - ZOOM_STEP).toFixed(2));
+    applyZoom();
+  });
+  applyZoom();
+
+  /* ---------- BOOK / TWO-PAGE SPREAD FLIP ---------- */
+  var TOTAL_PAGES = 154;
+  function pageUrl(n){
+    if(n < 1 || n > TOTAL_PAGES) return '';
+    var s = String(n);
+    while(s.length < 3) s = '0' + s;
+    return 'assets/pages/pg-' + s + '.jpg';
+  }
+
+  var current = 1;       // left page of the current spread (odd)
+  var maxReached = 2;
+  var animating = false;
+
+  var imgUnderL = document.getElementById('imgUnderL');
+  var imgFrontL = document.getElementById('imgFrontL');
+  var imgBackL  = document.getElementById('imgBackL');
+  var flipPageL = document.getElementById('flipPageL');
+
+  var imgUnderR = document.getElementById('imgUnderR');
+  var imgFrontR = document.getElementById('imgFrontR');
+  var imgBackR  = document.getElementById('imgBackR');
+  var flipPageR = document.getElementById('flipPageR');
+
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var pageInput = document.getElementById('pageInput');
+  var bmPage = document.getElementById('bmPage');
+  var progressFill = document.getElementById('progressFill');
+  var progressText = document.getElementById('progressText');
+  var totalPagesLbl = document.getElementById('totalPagesLbl');
+
+  function rightOf(n){ return Math.min(n+1, TOTAL_PAGES); }
+
+  function preload(n){
+    if(n < 1 || n > TOTAL_PAGES) return;
+    var im = new Image(); im.src = pageUrl(n);
+  }
+
+  function renderStatic(){
+    var l = current, r = rightOf(current);
+    imgFrontL.src = pageUrl(l);
+    imgUnderL.src = pageUrl(l);
+    imgBackL.src  = pageUrl(l);
+    imgFrontR.src = pageUrl(r);
+    imgUnderR.src = pageUrl(r);
+    imgBackR.src  = pageUrl(r);
+
+    [flipPageL, flipPageR].forEach(function(fp){
+      fp.style.transition = 'none';
+      fp.classList.remove('turning');
+    });
+    void flipPageL.offsetWidth;
+    flipPageL.style.transition = '';
+    flipPageR.style.transition = '';
+
+    updateUI();
+    preload(l-1); preload(l-2); preload(r+1); preload(r+2);
+  }
+
+  function updateUI(){
+    var l = current, r = rightOf(current);
+    pageInput.value = l;
+    bmPage.textContent = (l === r) ? ('Página ' + l) : ('Páginas ' + l + '–' + r);
+    totalPagesLbl.textContent = '– ' + r + ' de ' + TOTAL_PAGES;
+    if(r > maxReached) maxReached = r;
+    var pct = (maxReached/TOTAL_PAGES)*100;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = maxReached + ' de ' + TOTAL_PAGES + ' páginas';
+    prevBtn.disabled = (current <= 1);
+    nextBtn.disabled = (r >= TOTAL_PAGES);
+  }
+
+  function goNext(){
+    if(animating || rightOf(current) >= TOTAL_PAGES) return;
+    animating = true;
+    var newL = current + 2;
+    var newR = rightOf(newL);
+    imgBackL.src = pageUrl(newL);
+    imgUnderL.src = pageUrl(newL);
+    imgBackR.src = pageUrl(newR);
+    imgUnderR.src = pageUrl(newR);
+    flipPageL.style.zIndex = 5;
+    flipPageR.style.zIndex = 5;
+    requestAnimationFrame(function(){
+      flipPageL.classList.add('turning');
+      flipPageR.classList.add('turning');
+    });
+    setTimeout(function(){
+      current = newL;
+      renderStatic();
+      animating = false;
+    }, 760);
+  }
+
+  function goPrev(){
+    if(animating || current <= 1) return;
+    animating = true;
+    var target = Math.max(1, current - 2);
+    imgUnderL.src = pageUrl(current);
+    imgFrontL.src = pageUrl(target);
+    imgBackL.src  = pageUrl(current);
+    imgUnderR.src = pageUrl(rightOf(current));
+    imgFrontR.src = pageUrl(rightOf(target));
+    imgBackR.src  = pageUrl(rightOf(current));
+
+    [flipPageL, flipPageR].forEach(function(fp){
+      fp.style.transition = 'none';
+      fp.classList.add('turning');
+    });
+    void flipPageL.offsetWidth;
+    flipPageL.style.transition = '';
+    flipPageR.style.transition = '';
+
+    requestAnimationFrame(function(){
+      flipPageL.classList.remove('turning');
+      flipPageR.classList.remove('turning');
+    });
+    setTimeout(function(){
+      current = target;
+      renderStatic();
+      animating = false;
+    }, 760);
+  }
+
+  function goTo(n){
+    n = Math.max(1, Math.min(TOTAL_PAGES, Math.round(n)));
+    var base = (n % 2 === 1) ? n : (n - 1);
+    if(base < 1) base = 1;
+    if(base > TOTAL_PAGES - 1) base = (TOTAL_PAGES % 2 === 0) ? TOTAL_PAGES - 1 : TOTAL_PAGES;
+    if(base === current || animating) return;
+    current = base;
+    renderStatic();
+  }
+
+  nextBtn.addEventListener('click', goNext);
+  prevBtn.addEventListener('click', goPrev);
+  document.getElementById('zoneRight').addEventListener('click', goNext);
+  document.getElementById('zoneLeft').addEventListener('click', goPrev);
+
+  document.addEventListener('keydown', function(e){
+    if(overlay.classList.contains('open')) return;
+    if(e.key === 'ArrowRight') goNext();
+    if(e.key === 'ArrowLeft') goPrev();
+  });
+
+  pageInput.addEventListener('change', function(){ goTo(parseInt(pageInput.value,10)||1); });
+  document.getElementById('gotoForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = parseInt(document.getElementById('gotoInput').value, 10);
+    if(v) goTo(v);
+  });
+
+  renderStatic();
+})();
+</script>
+
+<!-- SDK de EmailJS (v4) — debe cargarse antes de assets/email.js -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Lógica de validación y envío del formulario de contacto -->
+<script src="assets/email.js"></script>
+
+<!-- Swiper.js (CDN) — debe cargarse antes de assets/historic-carousel.js -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Carrusel "Momentos Históricos" (efecto Coverflow, sin autoplay: solo el video central es interactivo) -->
+<script src="assets/historic-carousel.js"></script>
+
+<!-- Reproductor "AUDIO LIBRO": menú de capítulos + controles completos -->
+<script src="assets/audiobook.js"></script>
+</body>
+</html>
